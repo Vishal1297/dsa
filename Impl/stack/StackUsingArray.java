@@ -1,52 +1,60 @@
-// Stack Implementaion Using Kotlin
+// Stack Implementation Using Kotlin
 class Stack {
 
-    private var size = 5
-    private var stack = Array<Any>(size) {}
-    private var stackSize = 0
+    private int size = 5;
+    private final int[] stack = new int[size];
+    private int stackSize = 0;
 
-    fun setSize(size: Int) {
-        this.size = size
+    public void setSize(int size) {
+        this.size = size;
     }
 
-    fun push(element: Any) {
-        if (isFull()) println("Stack Overflow while adding $element")
-        else stack[stackSize++] = element
+    public Object push(Object element) {
+        if (isFull()) {
+            System.out.println("Stack Overflow while adding $element");
+            return -1;
+        } else
+            return stack[stackSize++] = (int) element;
     }
 
-    fun pop(): Any {
+    public Object pop() {
         if (isEmpty()) {
-            println("Stack Underflow")
-            return 0
+            System.out.println("Stack Underflow");
+            return 0;
         }
-        val lastIndex = stack.size - 1
-        val lastElement = stack[lastIndex]
-        stack[lastIndex] = 0
-        stackSize--
-        return lastElement
+        int lastIndex = stack.length - 1;
+        int lastElement = stack[lastIndex];
+        stack[lastIndex] = 0;
+        stackSize--;
+        return lastElement;
     }
 
-    fun peek(): Any {
-        return if (isEmpty())
-            "Stack is Empty"
+    public Object peek() {
+        if (isEmpty())
+            return "Stack is Empty";
         else
-            stack[stackSize - 1]
+            return stack[stackSize - 1];
     }
 
-    fun search(element: Any): Int {
-        for (index in 0 until stackSize) {
-            if (stack[index] === element) return index
+    public int search(Object element) {
+        for (int index = 0; index < stackSize; index++) {
+            if (element.equals(stack[index]))
+                return index;
         }
-        return -1
+        return -1;
     }
 
-    fun isFull(): Boolean = stackSize >= stack.size
-
-    fun isEmpty(): Boolean = stackSize <= 0
-
-    fun printStack() {
-        for (index in 0 until stackSize) print("${stack[index]} ")
-        println()
+    public boolean isFull() {
+        return stackSize >= stack.length;
     }
 
+    public boolean isEmpty() {
+        return stackSize <= 0;
+    }
+
+    public void printStack() {
+        for (int index = 0; index < stackSize; index++)
+            System.out.println(stack[index] + " ");
+        System.out.println();
+    }
 }
