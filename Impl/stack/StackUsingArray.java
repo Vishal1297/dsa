@@ -1,4 +1,4 @@
-// Stack Implementation Using Kotlin
+// Stack Implementation Using Arrays
 class Stack {
 
     private int size = 5;
