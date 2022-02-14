@@ -1,3 +1,5 @@
+package org.vishal.dsa.problems.bruteforce;
+
 import java.util.Scanner;
 
 public class Games {

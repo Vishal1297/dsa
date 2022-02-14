@@ -1,3 +1,5 @@
+package org.vishal.dsa.problems.sortings;
+
 import java.util.Arrays;
 import java.util.Scanner;
 

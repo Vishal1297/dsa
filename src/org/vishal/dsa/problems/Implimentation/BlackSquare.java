@@ -1,3 +1,5 @@
+package org.vishal.dsa.problems.Implimentation;
+
 import java.util.Scanner;
 
 public class BlackSquare {

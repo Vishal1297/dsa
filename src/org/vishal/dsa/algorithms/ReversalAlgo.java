@@ -1,4 +1,4 @@
-
+package org.vishal.dsa.algorithms;
 /* 
     rotate(arr[], d, n)
         reverse(arr[], 1, d) ;

@@ -1,3 +1,5 @@
+package org.vishal.dsa.Impl.queue;
+
 // Queue Implementation Using Arrays
 class QueueUsingArray {
 

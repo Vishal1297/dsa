@@ -1,3 +1,5 @@
+package org.vishal.dsa.problems.arrays;
+
 /**
  * ------------------------------ Single Element in a Sorted Array ------------------------------
  * 

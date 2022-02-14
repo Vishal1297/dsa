@@ -1,3 +1,5 @@
+package org.vishal.dsa.problems.math;
+
 import java.util.Scanner;
 
 /**

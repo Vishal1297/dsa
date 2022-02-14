@@ -1,3 +1,5 @@
+package org.vishal.dsa.problems.strings;
+
 import java.util.Scanner;
 
 public class NightAtTheMuseum {

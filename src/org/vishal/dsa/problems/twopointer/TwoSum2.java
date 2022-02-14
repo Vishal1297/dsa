@@ -1,3 +1,5 @@
+package org.vishal.dsa.problems.twopointer;
+
 public class TwoSum2 {
     public static void main(String[] args) {
         int input[] = {2, 7, 11, 15};

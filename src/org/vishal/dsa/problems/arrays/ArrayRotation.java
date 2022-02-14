@@ -1,3 +1,5 @@
+package org.vishal.dsa.problems.arrays;
+
 public class ArrayRotation {
 
     public static void main(String[] args) {

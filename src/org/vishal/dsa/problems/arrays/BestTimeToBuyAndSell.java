@@ -1,3 +1,5 @@
+package org.vishal.dsa.problems.arrays;
+
 public class BestTimeToBuyAndSell {
 
     public static void main(String[] args) {

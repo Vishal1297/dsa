@@ -1,3 +1,5 @@
+package org.vishal.dsa.problems.math;
+
 public class isFibonacciNumber {
 
     public static void main(String[] args) {

@@ -1,3 +1,5 @@
+package org.vishal.dsa.problems.arrays;
+
 import java.util.Arrays;
 
 public class SquaresOfSortedArray {

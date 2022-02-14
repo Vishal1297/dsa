@@ -1,3 +1,5 @@
+package org.vishal.dsa.problems.arrays;
+
 public class KeyInSegment {
     public static void main(String[] args) {
         int arr[] = { 3, 5, 2, 4, 9, 3, 1, 7, 3, 11, 12, 3 };
