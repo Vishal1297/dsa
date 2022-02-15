@@ -23,7 +23,6 @@ public class FindMissingAndRepeating {
         int sum = IntStream.of(arr).distinct().sum();
         int missingNum = (n * (n + 1)) / 2 - sum;
         HashMap<Integer, Long> map = Arrays.stream(arr).boxed().collect(Collectors.groupingBy(Function.identity(), HashMap::new, Collectors.counting()));
-        map.forEach((key, value) -> System.out.println("key " + key + " value " + value));
         int maxValueKey = Collections.max(map.entrySet(), Map.Entry.comparingByValue()).getKey();
         return new int[]{maxValueKey, missingNum};
     }
