@@ -17,6 +17,9 @@ public class WaveArray {
     public static void main(String[] args) {
         int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
         waveArray(arr, arr.length);
+        for (int num : arr) {
+            System.out.print(num + "\t");
+        }
     }
 
     private static void waveArray(int[] arr, int n) {
