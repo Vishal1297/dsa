@@ -1,4 +1,4 @@
-package org.vishal.dsa.problems.contest;
+package org.vishal.dsa.problems.contests;
 
 import java.util.Scanner;
 
