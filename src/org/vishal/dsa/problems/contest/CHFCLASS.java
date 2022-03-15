@@ -27,7 +27,7 @@ public class CHFCLASS {
         int t = scanner.nextInt();
         while (t-- > 0){
             long days = scanner.nextLong();
-            System.out.println(days / 6);
+            System.out.println(days % 7 != 6 ? days / 7 : (days / 7 + 1));
         }
         scanner.close();
     }
