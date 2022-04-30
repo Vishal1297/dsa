@@ -9,11 +9,9 @@ public class SearchSuggestSystem {
 
     public static void main(String[] args) {
         String[] products = {"bags", "baggage", "banner", "box", "cloths"};
-        String searchWord = "xvcb";
+        String searchWord = "bags";
         List<List<String>> result = suggestedProducts(products, searchWord);
-        System.out.println("\nOutput : ");
         for (List<String> resArrayList : result) {
-            System.out.println("size " + resArrayList.size());
             for (String string : resArrayList) {
                 System.out.print(string + " ");
             }
