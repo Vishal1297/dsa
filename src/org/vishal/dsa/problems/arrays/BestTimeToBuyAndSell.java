@@ -8,13 +8,15 @@ public class BestTimeToBuyAndSell {
     }
     
     public static int maxProfit(int[] prices) {
-        int profit = 0;
-        for (int i = 1; i < prices.length; i++) {
-            if (prices[i] > prices[i - 1]) {
-                profit += prices[i] - prices[i - 1];
-            }
+        int minprice = Integer.MAX_VALUE;
+        int maxprofit = 0;
+        for (int price : prices) {
+            if (price < minprice)
+                minprice = price;
+            else if (price - minprice > maxprofit)
+                maxprofit = price - minprice;
         }
-        return profit;
+        return maxprofit;
     }
     
 }
