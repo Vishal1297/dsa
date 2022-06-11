@@ -12,15 +12,19 @@ public class HashTableImpl<K, V> {
     public HashTableImpl() {
         this(10);
         this.size = 0;
-        // Create empty chains
-        for (int i = 0; i < capacity; i++)
-            buckets.add(null);
+        init(capacity);
     }
 
     public HashTableImpl(int capacity) {
         this.capacity = capacity;
         this.buckets = new ArrayList<>();
         this.size = 0;
+        init(capacity);
+    }
+
+    private void init(int capacity){
+        for (int i = 0; i < capacity; i++)
+            buckets.add(null);
     }
 
     public Integer getSize() {
@@ -142,7 +146,7 @@ public class HashTableImpl<K, V> {
      * Runner method
      */
     public static void main(String[] args) {
-        HashTableImpl<Integer, String> hashTable = new HashTableImpl<>();
+        HashTableImpl<Integer, String> hashTable = new HashTableImpl<>(5);
         System.out.println("size of hashtable " + hashTable.getSize());
         System.out.println("capacity of hashtable " + hashTable.getCapacity());
         hashTable.put(2,"a");
@@ -151,5 +155,16 @@ public class HashTableImpl<K, V> {
         System.out.println("size of hashtable " + hashTable.getSize());
         System.out.println("removed value " + hashTable.remove(3));;
         System.out.println(hashTable.get(2));
+
+        for (int i = 0; i < 7; i++) {
+            hashTable.put(i, "" + i);
+        }
+
+        System.out.println("size : " + hashTable.getSize());
+        System.out.println("capacity : " + hashTable.getCapacity());
+
+        for (int i = 0; i < 7; i++) {
+            System.out.println("key " + i + " value " +hashTable.get(i));
+        }
     }
 }
