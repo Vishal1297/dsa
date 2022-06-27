@@ -1,18 +1,18 @@
-package org.vishal.dsa.Impl.tree;
+package org.vishal.dsa.Impl.heap;
 
-public class MinHeap {
+public class MinHeapImpl {
 
     private final int capacity;
-    private int index = 0;
+    private int index;
     private final int[] heap;
 
-    public MinHeap(){
+    public MinHeapImpl(){
         this.index = 0;
         this.capacity = 10;
         this.heap = new int[capacity];
     }
 
-    public MinHeap(int capacity) {
+    public MinHeapImpl(int capacity) {
         this.index = 0;
         this.capacity = capacity;
         this.heap = new int[capacity];
@@ -51,24 +51,31 @@ public class MinHeap {
         index++;
     }
 
+    public int peek() { return heap[0]; }
+
     public int remove() {
-        int popped = heap[0];
-        heap[0] = heap[--index];
+        if (index - 1 < 0) return -1;
+        swap(0, index - 1);
+        int popped = heap[--index];
         minHeapify(0);
         return popped;
     }
 
-    private void minHeapify(int i) {
-        if (!isLeaf(i)) {
-            if (heap[i] > heap[leftChild(i)] || heap[i] > heap[rightChild(i)]) {
-                if (heap[leftChild(i)] < heap[rightChild(i)]) {
-                    swap(i, leftChild(i));
-                    minHeapify(leftChild(i));
-                } else {
-                    swap(i, rightChild(i));
-                    minHeapify(rightChild(i));
-                }
-            }
+    private void minHeapify(int parentIndex) {
+        int minIndex = parentIndex;
+        int leftIndex = leftChild(parentIndex);
+        if (leftIndex < index && heap[minIndex] > heap[leftIndex]){
+            minIndex = leftIndex;
+        }
+
+        int rightIndex = rightChild(parentIndex);
+        if (rightIndex < index && heap[minIndex] > heap[rightIndex]){
+            minIndex = rightIndex;
+        }
+
+        if (minIndex != parentIndex){
+            swap(parentIndex, minIndex);
+            minHeapify(minIndex);
         }
     }
 
@@ -80,7 +87,7 @@ public class MinHeap {
 
     public void printHeap() {
         System.out.println("Heap elements : ");
-        for (int i = 0; i < (index / 2); i++) {
+        for (int i = 0; i < (index  / 2); i++) {
             System.out.println("Parent : " + heap[i]);
             if (leftChild(i) < index)
                 System.out.print("Left : " + heap[leftChild(i)]);
@@ -92,21 +99,25 @@ public class MinHeap {
     }
 
     public static void main(String[] args) {
-        MinHeap minHeap = new MinHeap(10);
-        for (int i = 10; i>=0; i--) {
-            minHeap.insert(i);
+        MinHeapImpl minHeapImpl = new MinHeapImpl(10);
+        for (int i = 10; i>0; i--) {
+            minHeapImpl.insert(i);
         }
 
-        minHeap.minHeap();
+        System.out.println("Peek of heap : " + minHeapImpl.peek());
 
-        minHeap.printHeap();
+        minHeapImpl.minHeap();
 
-        int elementsToRemove = 4;
+        minHeapImpl.printHeap();
+
+        int elementsToRemove = 6;
+        System.out.print("Removed : ");
         for (int i = 0; i < elementsToRemove; i++) {
-            minHeap.remove();
+            System.out.print(minHeapImpl.remove() + " ");
         }
-        System.out.println("After removing " + elementsToRemove + " elements : ");
-        minHeap.printHeap();
+        System.out.println("\nAfter removing " + elementsToRemove + " elements : ");
+
+        minHeapImpl.printHeap();
     }
 
 }
