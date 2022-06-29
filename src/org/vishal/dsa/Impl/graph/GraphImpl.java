@@ -47,23 +47,13 @@ public class GraphImpl<T> {
     }
 
     public void hasVertex(T s) {
-        if (map.containsKey(s)) {
-            System.out.println("The graph contains "
-                    + s + " as a vertex.");
-        } else {
-            System.out.println("The graph does not contain "
-                    + s + " as a vertex.");
-        }
+        System.out.println("The graph " + (!map.containsKey(s) ? "does not contain" : "")  + "contain "
+                + s + " as a vertex.");
     }
 
     public void hasEdge(T s, T d) {
-        if (map.get(s).contains(d)) {
-            System.out.println("The graph has an edge between "
-                    + s + " and " + d + ".");
-        } else {
-            System.out.println("The graph has no edge between "
-                    + s + " and " + d + ".");
-        }
+        System.out.println("The graph has " + (map.get(s).contains(d) ? "an" : "no")
+                + " edge between " + s + " and " + d + ".");
     }
 
     public void print() {
