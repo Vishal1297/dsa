@@ -1,25 +1,31 @@
 package org.vishal.dsa.impl.graph;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class GraphImplUsingAdjList {
 
     private final List<List<Integer>> graph;
-    private final int vertex;
+    private int vertex;
     private int edges;
+    boolean[] visited;
+
+    int[] levels;
 
     public GraphImplUsingAdjList(int vertex) {
         this.vertex = vertex + 1;
         this.edges = 0;
         this.graph = new ArrayList<>(this.vertex);
+        this.visited = new boolean[this.vertex];
+        this.levels = new int[this.vertex];
         init();
     }
 
     public void init(){
         for (int i = 0; i < vertex; i++)
             graph.add(new ArrayList<>());
+        for (int i = 0; i < vertex; i++) {
+            visited[i] = false;
+        }
     }
 
     public void addEdge(Integer source, Integer destination) {
@@ -82,6 +88,36 @@ public class GraphImplUsingAdjList {
         return this.graph.toString();
     }
 
+    public void dfs(int vertex) {
+        System.out.println("Parent : " + vertex);
+        if (visited[vertex]) return;
+        visited[vertex] = true;
+        for (Integer child : graph.get(vertex)) {
+            System.out.println("Parent : " + vertex + " Child : " + child);
+            dfs(child);
+        }
+    }
+
+    public void bfs(int source) {
+        Queue<Integer> queue = new PriorityQueue<>();
+        queue.add(source);
+        visited[source] = true;
+        while (!queue.isEmpty()) {
+            int curr_v = queue.peek();
+            queue.poll();
+            System.out.println("\nLevel : " + (levels[curr_v] + 1));
+            System.out.print("Parent : " + curr_v + " => ");
+            for (int child : graph.get(curr_v)) {
+                if (!visited[child]) {
+                    System.out.print(child + "\t");
+                    queue.add(child);
+                    visited[child] = true;
+                    levels[child] = levels[curr_v] + 1;
+                }
+            }
+        }
+    }
+
     public static void main(String[] args) {
         int vertex = 10;
         GraphImplUsingAdjList impl = new GraphImplUsingAdjList(vertex);
@@ -98,6 +134,9 @@ public class GraphImplUsingAdjList {
         System.out.println("Total edges : " + impl.getEdges());
         System.out.println("Contains vertex " + destination + " : " + impl.containsVertex(destination));
         impl.printGraph();
+
+//        impl.dfs(1);
+        impl.bfs(1);
     }
 
     public static int getRandomValue(int upperBound) {
