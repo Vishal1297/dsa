@@ -1,4 +1,4 @@
-package org.vishal.dsa.Impl.tree;
+package org.vishal.dsa.impl.tree;
 
 public class BinarySearchTreeImpl<T extends Comparable<T>> {
 

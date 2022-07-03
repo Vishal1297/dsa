@@ -1,4 +1,4 @@
-package org.vishal.dsa.Impl.heap;
+package org.vishal.dsa.impl.heap;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package org.vishal.dsa.Impl.stack;
+package org.vishal.dsa.impl.stack;
 
 // Stack Implementation Using Arrays
 class Stack {

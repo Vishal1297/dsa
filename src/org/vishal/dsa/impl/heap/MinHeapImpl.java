@@ -1,4 +1,4 @@
-package org.vishal.dsa.Impl.heap;
+package org.vishal.dsa.impl.heap;
 
 public class MinHeapImpl {
 

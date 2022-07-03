@@ -1,4 +1,4 @@
-package org.vishal.dsa.Impl.array;
+package org.vishal.dsa.impl.array;
 
 public class ArrayListImpl {
 

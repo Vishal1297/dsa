@@ -1,4 +1,4 @@
-package org.vishal.dsa.Impl.graph;
+package org.vishal.dsa.impl.graph;
 
 import java.util.HashMap;
 import java.util.LinkedList;

@@ -1,4 +1,4 @@
-package org.vishal.dsa.Impl.string;
+package org.vishal.dsa.impl.string;
 
 public class StringBuilderImpl {
 

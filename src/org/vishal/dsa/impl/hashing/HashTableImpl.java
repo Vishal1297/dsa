@@ -1,4 +1,4 @@
-package org.vishal.dsa.Impl.hashing;
+package org.vishal.dsa.impl.hashing;
 
 import java.util.ArrayList;
 import java.util.Objects;

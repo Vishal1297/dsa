@@ -1,4 +1,4 @@
-package org.vishal.dsa.Impl.list;
+package org.vishal.dsa.impl.list;
 
 class Node {
     private int data;
