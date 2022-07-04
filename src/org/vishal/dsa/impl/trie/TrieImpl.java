@@ -34,27 +34,32 @@ public class TrieImpl {
         temp.isEndOfWord = true;
     }
 
-    public TrieNode search(String key) {
+    public boolean search(String key) {
         int length = key.length();
-        TrieNode temp = root;
+        TrieNode temp = this.root;
         int index;
         for (int level = 0; level < length; level++) {
             index = key.charAt(level) - 'a';
             if (temp.childrens[index] == null) {
-                return null;
+                return false;
             }
             temp = temp.childrens[index];
         }
-        if(temp==root) return null;
-        return temp;
-    }
-
-    public boolean searchNode(String key) {
-        return search(key) != null;
+        return temp.isEndOfWord;
     }
 
     public boolean startsWith(String prefix) {
-        return search(prefix) != null;
+        int length = prefix.length();
+        TrieNode temp = this.root;
+        int index;
+        for (int level = 0; level < length; level++) {
+            index = prefix.charAt(level) - 'a';
+            if (temp.childrens[index] == null) {
+                return false;
+            }
+            temp = temp.childrens[index];
+        }
+        return true;
     }
 
     public static void main(String[] args) {
@@ -64,16 +69,17 @@ public class TrieImpl {
         TrieImpl impl = new TrieImpl();
         for (String key : keys) impl.insert(key);
 
-        if (impl.searchNode("the"))
-            System.out.println("the --- " + output[1]);
-        else System.out.println("the --- " + output[0]);
+        if (impl.search("answer"))
+            System.out.println("answer --- " + output[1]);
+        else System.out.println("answer --- " + output[0]);
 
-        if (impl.searchNode("th"))
+        if (impl.search("th"))
             System.out.println("th --- " + output[1]);
         else System.out.println("th --- " + output[0]);
 
         String prefix = "ans";
 
         System.out.println("Starts with " + prefix + " : " + impl.startsWith(prefix));
+        System.out.println("Starts with answers : " + impl.startsWith("answers"));
     }
 }
