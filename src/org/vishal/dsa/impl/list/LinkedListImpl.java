@@ -1,107 +1,108 @@
 package org.vishal.dsa.impl.list;
 
-class Node {
-    private int data;
-    private Node next;
+class Node<T> {
+    private T data;
+    private Node<T> next;
 
     public Node() {
     }
 
-    public Node(int data, Node next){
+    public Node(T data, Node<T> next){
         this.data = data;
         this.next = next;
     }
 
-    public int getData() {
+    public T getData() {
         return data;
     }
 
-    public void setData(int data) {
+    public void setData(T data) {
         this.data = data;
     }
 
-    public Node getNext() {
+    public Node<T> getNext() {
         return next;
     }
 
-    public void setNext(Node next) {
+    public void setNext(Node<T> next) {
         this.next = next;
     }
 }
 
-public class LinkedListImpl {
+public class LinkedListImpl<T extends Comparable<T>> {
 
-    private Node head;
+    private Node<T> head;
     private int current;
 
     public LinkedListImpl() {
     }
 
-    public void add(int element){
-        if (head == null) head = new Node(element, null);
+    public void add(T element){
+        if (head == null) head = new Node<>(element, null);
         else {
-            Node temp = head;
+            Node<T> temp = head;
             while (temp.getNext() != null){
                 temp = temp.getNext();
             }
-            temp.setNext(new Node(element, null));
+            temp.setNext(new Node<>(element, null));
         }
         current++;
     }
 
-    public void addAtFirst(int element){
-        if (head == null) head = new Node(element, null);
+    public void addAtFirst(T element){
+        if (head == null) head = new Node<>(element, null);
         else {
-            Node node = head;
-            head = new Node(element, node);
+            Node<T> node = head;
+            head = new Node<>(element, node);
         }
         current++;
     }
 
-    public void add(int element, int index){
+    public void add(T element, int index){
         if (index < 0 || index > current) {
             throw new IllegalArgumentException("Invalid index");
         } else if (index == 0) {
             addAtFirst(element);
         }else {
-            if (head == null) head = new Node(element, null);
+            if (head == null) head = new Node<>(element, null);
             else {
                 int currIndex = index;
-                Node temp = head;
+                Node<T> temp = head;
                 while (currIndex > 1){
                     temp = temp.getNext();
                     currIndex--;
                 }
-                Node next = temp.getNext();
-                temp.setNext(new Node(element, next));
+                Node<T> next = temp.getNext();
+                temp.setNext(new Node<>(element, next));
             }
         }
     }
 
-    public int remove(){
+    public T remove(){
         if (head == null){
-            return -1;
+            throw new IllegalStateException("List is empty");
         }else {
-            int elem = head.getData();
+            T elem = head.getData();
             head = head.getNext();
             return elem;
         }
     }
 
-    public int remove(int index){
+    public T remove(int index){
         if (index < 0) throw new IllegalArgumentException("Invalid index");
         else if (index == 0) return remove();
         else {
-            if (head == null || index >= current) return -1;
+            if (head == null) throw new IllegalStateException("List is empty");
+            else if (index >= current) throw new IllegalArgumentException("Invalid index");
             else {
                 int currIndex = index;
-                Node temp = head;
+                Node<T> temp = head;
                 while (currIndex > 1){
                     temp = temp.getNext();
                     currIndex--;
                 }
-                int removed = temp.getNext().getData();
-                Node next = temp.getNext().getNext();
+                T removed = temp.getNext().getData();
+                Node<T> next = temp.getNext().getNext();
                 temp.setNext(next);
                 return removed;
             }
@@ -112,10 +113,10 @@ public class LinkedListImpl {
         this.head = null;
     }
 
-    public int peek() {
-        if (head == null) return -1;
+    public T peek() {
+        if (head == null) throw new IllegalStateException("List is empty");
         else {
-            Node temp = head;
+            Node<T> temp = head;
             while (temp.getNext() != null){
                 temp = temp.getNext();
             }
@@ -123,17 +124,17 @@ public class LinkedListImpl {
         }
     }
 
-    public int get(int index){
+    public T get(int index){
         if (index < 0) throw new IllegalArgumentException("Invalid index");
         else if (head == null) {
-            return -1;
+            throw new IllegalStateException("List is empty");
         } else if (index == 0) {
             return head.getData();
         }else {
-            if (index >= current - 1) return -1;
+            if (index >= current - 1) throw new IllegalArgumentException("Invalid index");
             else {
                 int currIndex = index;
-                Node temp = head;
+                Node<T> temp = head;
                 while (currIndex > 0){
                     temp = temp.getNext();
                     currIndex--;
@@ -143,8 +144,8 @@ public class LinkedListImpl {
         }
     }
 
-    public int pollFirst(){
-        if (head == null) return -1;
+    public T pollFirst(){
+        if (head == null) throw new IllegalStateException("List is empty");
         else  {
             return head.getData();
         }
@@ -153,17 +154,18 @@ public class LinkedListImpl {
     public int length() { return current - 1; }
 
     public void print(){
-        Node temp = head;
+        Node<T> temp = head;
         if (temp == null) return;
         while (temp.getNext() != null){
             System.out.print(temp.getData() + " => ");
             temp = temp.getNext();
         }
         System.out.print(temp.getData());
+        System.out.println();
     }
 
     public static void main(String[] args) {
-        LinkedListImpl linkedList = new LinkedListImpl();
+        LinkedListImpl<Integer> linkedList = new LinkedListImpl<>();
         linkedList.add(4);
         linkedList.add(14);
         linkedList.add(40);
@@ -175,10 +177,12 @@ public class LinkedListImpl {
         System.out.println("remove at 3 : " + linkedList.remove(3));
         System.out.println("length " + linkedList.length());
         System.out.println("peek " + linkedList.peek());
+        System.out.println("LinkedList :");
+        linkedList.print();
         System.out.println("get at 0 : " + linkedList.get(0));
         System.out.println("get at 3 : " + linkedList.get(3));
         System.out.println("length " + linkedList.length());
-        System.out.print("LinkedList : ");
+        System.out.print("LinkedList :");
         linkedList.print();
     }
 }
