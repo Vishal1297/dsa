@@ -12,24 +12,32 @@ import java.util.HashSet;
 public class SingleNumber {
 
     public static void main(String[] args) {
-        int[] nums = {4, 1, 2, 1, 2};
-        System.out.println(singleNumber(nums));
+        int[] nums = {4, 1, 4, 1, 2};
+        System.out.println(singleNumberV2(nums));
     }
 
     public static int singleNumber(int[] nums) {
         int length = nums.length;
         if (length == 1) return nums[0];
         HashSet<Integer> unique = new HashSet<>();
-        for (int i = 0; i < length; i++) {
-            if(unique.contains(nums[i])){
-                unique.remove(nums[i]);
-            }else {
-                unique.add(nums[i]);
+        for (int j : nums) {
+            if (unique.contains(j)) {
+                unique.remove(j);
+            } else {
+                unique.add(j);
             }
         }
-        for (int num : unique){
+        for (int num : unique) {
             return num;
         }
         return -1;
+    }
+
+    public static int singleNumberV2(int[] nums) {
+        int result = 0;
+        for (int num : nums) {
+            result = result ^ num;
+        }
+        return result;
     }
 }
