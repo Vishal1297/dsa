@@ -1,5 +1,7 @@
 package org.vishal.dsa.impl.tree;
 
+import java.util.Stack;
+
 public class BinarySearchTreeImpl<T extends Comparable<T>> {
 
     static class TreeNode<T> {
@@ -117,6 +119,51 @@ public class BinarySearchTreeImpl<T extends Comparable<T>> {
         System.out.print(" " + root.data);
     }
 
+    /**
+     *
+     * In order traversal - iterative
+     */
+    public void inOrderIterative(TreeNode<T> root) {
+        System.out.print("In-order Traversal - iterative : ");
+        Stack<TreeNode<T>> stack = new Stack<>();
+        TreeNode<T> currNode = root;
+
+        while (!stack.isEmpty() || currNode != null) {
+            if (currNode != null) {
+                stack.push(currNode);
+                currNode = currNode.left;
+            }else {
+                currNode = stack.peek();
+                stack.pop();
+                System.out.print(currNode.data + " ");
+                currNode = currNode.right;
+            }
+        }
+        System.out.println();
+    }
+
+    /**
+     *
+     * Pre order traversal - iterative
+     */
+    public void preOrderIterative(TreeNode<T> root) {
+        System.out.print("Pre-order Traversal - iterative : ");
+        Stack<TreeNode<T>> stack = new Stack<>();
+        TreeNode<T> currNode = root;
+
+        while (!stack.isEmpty() || currNode != null) {
+            if (currNode != null) {
+                System.out.print(currNode.data + " ");
+                stack.push(currNode.right);
+                currNode = currNode.left;
+            }else {
+                currNode = stack.peek();
+                stack.pop();
+            }
+        }
+        System.out.println();
+    }
+
     public static void main(String[] args) {
         BinarySearchTreeImpl<Integer> bst = new BinarySearchTreeImpl<>();
         for (int i = 0; i < 5; i++) {
@@ -134,6 +181,9 @@ public class BinarySearchTreeImpl<T extends Comparable<T>> {
         bst.inOrder();
         bst.preOrder();
         bst.postOrder();
+
+        bst.inOrderIterative(bst.root);
+        bst.preOrderIterative(bst.root);
     }
 
 }
