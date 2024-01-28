@@ -17,8 +17,7 @@ public class ReversalAlgo {
     }
 
     private static void printArray(int[] arr) {
-        for (int index = 0; index < arr.length; index++) 
-            System.out.print(arr[index] + " ");
+        for (int num : arr) System.out.print(num + " ");
         System.out.println();
     }
 

@@ -7,8 +7,8 @@ public class StringBuilderImpl {
     private int capacity;
 
     public StringBuilderImpl() {
-        capacity = 10;
-        length = 0;
+        this.capacity = 16;
+        this.length = 0;
         this.internalBuffer = new char[capacity];
     }
 
@@ -19,7 +19,7 @@ public class StringBuilderImpl {
 
     public StringBuilderImpl append(String string) {
         char[] charArray = string.toCharArray();
-        ensureInternalCapacity(charArray.length);
+        ensureCapacity(charArray.length);
         for (char c : charArray) {
             internalBuffer[length] = c;
             length++;
@@ -27,8 +27,8 @@ public class StringBuilderImpl {
         return this;
     }
 
-    private void ensureInternalCapacity(int lengthRequired) {
-        while (length + lengthRequired > capacity) expandInternalBuffer();
+    private void ensureCapacity(int requiredLength) {
+        while (length + requiredLength > capacity) expandInternalBuffer();
     }
 
     private void expandInternalBuffer() {
@@ -39,8 +39,7 @@ public class StringBuilderImpl {
     }
 
     public StringBuilderImpl append(Character ch) {
-        internalBuffer[length] = ch;
-        length++;
+        internalBuffer[length++] = ch;
         return this;
     }
 
@@ -48,6 +47,7 @@ public class StringBuilderImpl {
         if (index < 0 || index >= internalBuffer.length) throw new IllegalArgumentException("Invalid index");
         System.arraycopy(this.internalBuffer, index + 1, this.internalBuffer, index, this.length - index - 1);
         --this.length;
+        this.internalBuffer[length] = '\u0000';
         return this;
     }
 
@@ -59,11 +59,18 @@ public class StringBuilderImpl {
         return length;
     }
 
+    public int getCapacity() {
+        return capacity;
+    }
+
     public static void main(String[] args) {
         StringBuilderImpl stringBuilder = new StringBuilderImpl();
-        stringBuilder.append('a').append("abc");
+        stringBuilder.append('x').append("abc");
         System.out.println(stringBuilder);
         stringBuilder.deleteCharAt(1);
         System.out.println(stringBuilder);
+        System.out.println(stringBuilder.internalBuffer[3]);
+        System.out.println(stringBuilder.isEmpty());
+        System.out.println(stringBuilder.size());
     }
 }
