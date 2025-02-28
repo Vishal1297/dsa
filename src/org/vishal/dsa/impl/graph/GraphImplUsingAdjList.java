@@ -5,6 +5,7 @@ import java.util.*;
 public class GraphImplUsingAdjList {
 
     private final List<List<Integer>> graph;
+    private boolean isBidirectional;
     private int vertex;
     private int edges;
     boolean[] visited;
@@ -20,7 +21,7 @@ public class GraphImplUsingAdjList {
         init();
     }
 
-    public void init(){
+    public void init() {
         for (int i = 0; i < vertex; i++)
             graph.add(new ArrayList<>());
         for (int i = 0; i < vertex; i++) {
@@ -28,21 +29,27 @@ public class GraphImplUsingAdjList {
         }
     }
 
-    public void addEdge(Integer source, Integer destination) {
-        if (Objects.equals(source, destination)) return;
-        validateEdge(source, destination);
+    public void setBidirectional(boolean bidirectional) {
+        this.isBidirectional = bidirectional;
+    }
+
+    public boolean addEdge(Integer source, Integer destination) {
+        if (Objects.equals(source, destination)) return false;
+        isValidEdge(source, destination);
         if (!graph.get(source).contains(destination)) {
             graph.get(source).add(destination);
             edges++;
         }
-        if (!graph.get(destination).contains(source)) {
+        if (this.isBidirectional && !graph.get(destination).contains(source)) {
             graph.get(destination).add(source);
             edges++;
+            return true;
         }
+        return true;
     }
 
     public boolean removeEdge(Integer source, Integer destination) {
-        validateEdge(source, destination);
+        isValidEdge(source, destination);
         if (graph.get(source) == null || graph.get(source).isEmpty()) return false;
         if (!graph.get(source).contains(destination)) return false;
         graph.get(source).remove(destination);
@@ -67,18 +74,17 @@ public class GraphImplUsingAdjList {
         return vertex;
     }
 
-    public void validateEdge(int source, int destination) {
-        if (source < 0 || destination < 0) throw new IllegalStateException("Invalid vertex.");
-        if (source >= graph.size() || destination >= graph.size()) throw new IllegalStateException("Invalid vertex.");
+    public boolean isValidEdge(int source, int destination) {
+        if (source < 0 || destination < 0) return false;
+        return source < graph.size() && destination < graph.size();
     }
 
     public void printGraph() {
-        System.out.println("\nGraph : ");
         System.out.println("All Edges");
         for (int i = 0; i < graph.size(); i++) {
             List<Integer> edges = graph.get(i);
-            if (edges != null && !edges.isEmpty()){
-                System.out.println("" + i + " connected to " + edges);
+            if (edges != null && !edges.isEmpty()) {
+                System.out.println("Vertex " + i + " connected to " + edges);
             }
         }
     }
@@ -89,11 +95,10 @@ public class GraphImplUsingAdjList {
     }
 
     public void dfs(int vertex) {
-        System.out.println("Parent : " + vertex);
         if (visited[vertex]) return;
         visited[vertex] = true;
         for (Integer child : graph.get(vertex)) {
-            System.out.println("Parent : " + vertex + " Child : " + child);
+            System.out.println("Parent: " + vertex + " Child: " + child);
             dfs(child);
         }
     }
@@ -105,8 +110,8 @@ public class GraphImplUsingAdjList {
         while (!queue.isEmpty()) {
             int curr_v = queue.peek();
             queue.poll();
-            System.out.println("\nLevel : " + (levels[curr_v] + 1));
-            System.out.print("Parent : " + curr_v + " => ");
+            System.out.println("Level: " + (levels[curr_v] + 1));
+            System.out.print("Parent: " + curr_v + " => Child: ");
             for (int child : graph.get(curr_v)) {
                 if (!visited[child]) {
                     System.out.print(child + "\t");
@@ -115,31 +120,31 @@ public class GraphImplUsingAdjList {
                     levels[child] = levels[curr_v] + 1;
                 }
             }
+            System.out.println();
         }
     }
 
     public static void main(String[] args) {
-        int vertex = 10;
+        int vertex = 8;
         GraphImplUsingAdjList impl = new GraphImplUsingAdjList(vertex);
-        for (int i = 0; i < vertex; i++) {
-            impl.addEdge(getRandomValue(vertex), getRandomValue(vertex));
+        impl.setBidirectional(true);
+        for (int i = 1; i < vertex - 1; i++) {
+            impl.addEdge(i, i + 2);
         }
         System.out.println(impl);
+
         impl.printGraph();
-        int source = 1, destination = 4;
-        System.out.println("Total edges : " + impl.getEdges());
-        System.out.println("Contains edge : " + source + " " + destination + " : " + impl.containsEdge(source, destination));
-        System.out.println("Edge removed : " + source + " " + destination + " : " + impl.removeEdge(source, destination));
-        System.out.println("Edge removed : " + destination + " " + source + " : " + impl.removeEdge(destination, source));
+        impl.bfs(5);
+//        impl.bfs(1);
+
+        int source = 1, destination = 3;
         System.out.println("Total edges : " + impl.getEdges());
         System.out.println("Contains vertex " + destination + " : " + impl.containsVertex(destination));
+        System.out.println("Contains edge : " + source + "-" + destination + " : " + impl.containsEdge(source, destination));
+        System.out.println("Edge removed : " + source + "-" + destination + " : " + impl.removeEdge(source, destination));
+        System.out.println("Edge removed : " + destination + "-" + source + " : " + impl.removeEdge(destination, source));
+        System.out.println("Total edges : " + impl.getEdges());
         impl.printGraph();
 
-//        impl.dfs(1);
-        impl.bfs(1);
-    }
-
-    public static int getRandomValue(int upperBound) {
-        return (int) (Math.random() * (upperBound - 1)) + 1;
     }
 }
