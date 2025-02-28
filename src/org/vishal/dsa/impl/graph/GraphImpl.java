@@ -8,12 +8,22 @@ import java.util.Map;
 public class GraphImpl<T> {
 
     private final Map<T, List<T>> map;
+    private boolean isBidirectional;
 
     public GraphImpl() {
-        map = new HashMap<>();
+        this.map = new HashMap<>();
     }
 
-    public void addEdge(T source, T destination, Boolean isBidirectional) {
+    public GraphImpl(boolean isBidirectional) {
+        this.isBidirectional = isBidirectional;
+        this.map = new HashMap<>();
+    }
+
+    public void setBidirectional(boolean isBidirectional) {
+        this.isBidirectional = isBidirectional;
+    }
+
+    public void addEdge(T source, T destination) {
         if (!map.containsKey(source)) {
             addVertex(source);
         }
@@ -24,7 +34,7 @@ public class GraphImpl<T> {
 
         map.get(source).add(destination);
 
-        if (isBidirectional) map.get(destination).add(source);
+        if (this.isBidirectional) map.get(destination).add(source);
     }
 
     public void addVertex(T source) {
@@ -35,46 +45,45 @@ public class GraphImpl<T> {
         return map.keySet().size();
     }
 
-    public int getEdgesCount(Boolean isBidirectional) {
+    public int getEdgesCount() {
         int count = 0;
         for (T key : map.keySet()) {
             count += map.get(key).size();
         }
-        if (isBidirectional) {
-            count = count / 2;
-        }
-        return count;
+        return this.isBidirectional ? count / 2 : count;
     }
 
-    public void hasVertex(T s) {
-        System.out.println("The graph " + (!map.containsKey(s) ? "does not contain" : "")  + "contain "
-                + s + " as a vertex.");
+    public boolean hasVertex(T s) {
+        return map.containsKey(s);
     }
 
-    public void hasEdge(T s, T d) {
-        System.out.println("The graph has " + (map.get(s).contains(d) ? "an" : "no")
-                + " edge between " + s + " and " + d + ".");
+    public boolean hasEdge(T s, T d) {
+        return map.get(s) != null && map.get(s).contains(d);
     }
 
     public void print() {
         for (T key : map.keySet()) {
-            System.out.println("Source : " + key + "\nDestinations " + map.get(key));
-            System.out.println();
+            System.out.println("Source: " + key + "\t| Destinations: " + map.get(key));
         }
     }
 
     public static void main(String[] args) {
         GraphImpl<Integer> graph = new GraphImpl<>();
-        for (int i = 1; i < 11; i++) {
-            graph.addEdge(i, i + 2, true);
+        graph.setBidirectional(true);
+        for (int i = 1; i <= 6; i++) {
+            graph.addEdge(i, i + 2);
         }
         graph.print();
 
         System.out.println("Total vertex : " + graph.getVertexCount());
-        System.out.println("Total edges : " + graph.getEdgesCount(false));
+        System.out.println("Total edges : " + graph.getEdgesCount());
 
-        graph.hasEdge(1, 3);
+        if (graph.hasEdge(1, 3)) {
+            System.out.println("Edge exists");
+        }
 
-        graph.hasVertex(3);
+        if (graph.hasVertex(1)) {
+            System.out.println("Vertex exists");
+        }
     }
 }
